@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js"></script>
+    <link rel="stylesheet" type="text/css" href="..\static\index.css" />
+    <script>
+      if (localStorage.getItem('lastChannel')) {
+        let channel = localStorage.getItem('lastChannel')
+        window.location.replace('/channels/' + channel)
+      }
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        background-color: #f5f5f5;
+      }
+    </style>
+    <title>Kelly's chat</title>
+  </head>
+  <body>
+    <nav class="nav nav-pills nav-justified">
+      <a class="nav-item nav-link active" href="/">Home</a>
+      <a class="nav-item nav-link" href="/channels">Channels</a>
+      <a class="nav-item nav-link" id="newChannel" href="/create">Create New Channel</a>
+      <a class="nav-item nav-link" id="logOut" href="/logout">Logout</a>
+    </nav>
+    <div class="header">
+      <div class="info">
+        <h4><a href="/">Kelly's chat</a></h4>
+        <h1>Lifting communities one chat at a time</h1>
+        <div class="meta">
+          <a href="https://www.linkedin.com/in/kelly-martin-9a0a78210" target="_b" class="author"></a><br />
+          By <a href="https://www.linkedin.com/in/kelly-martin-9a0a78210" target="_b">Kelly Martin</a> on May 28, 2021
+        </div>
+      </div>
+    </div>
+    <section class="content">
+      <p>
+        A Little Bit about me, my name is Kelly Rose Brigid Martin, although most people just call me
+        Kell. I am 21 years old and I am the founder of three businesses, and I’m currently in the
+        process of buying my first commercial property. All three of my businesses are primarily if not
+        entirely ecommerce based. I operate a car detailing business, social media marketing team, and
+        finally a baby department store. I've always found it important to diversify yourself in business to
+        not only learn but to see what you take to.However, I am currently looking to move away from
+        these endeavours and move towards the hospitality business and real estate development, I am
+        currently in the process of purchasing a country club as my first attempt at the hospitality
+        business. I have already flipped multiple condos and townhouses which first sparked my love for
+        property development. The main thing I want people to know is that there is always a way to get
+        started in business no matter your age you just have to be creative and find your niche, I am here to help you do that.
+      </p>
+      <p align="center">
+        <a href="https://www.linkedin.com/in/kelly-martin-9a0a78210" class="btn" target="_blank">Follow me on Linkdin &#128038</a>
+        <a href="..\static\kelly-Resume.pdf" class="btn" target="_blank"> or check out my resume &#128513</a>
+      </p>
+    </section>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

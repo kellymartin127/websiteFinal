@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js"></script>
+    <link rel="stylesheet" type="text/css" href="..\static\index.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <title>Kelly's chat</title>
+    <style>
+      body {
+        background-color: #f5f5f5;
+      }
+
+      class img {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelector('#logOut').addEventListener('click', () => {
+          localStorage.removeItem('lastChannel')
+        })
+
+        if (localStorage.getItem('lastChannel')) {
+          // Redirect to last channel
+          let channel = localStorage.getItem('lastChannel')
+          window.location.replace('/channels/' + channel)
+        }
+
+        document.querySelector('#submit').disabled = true
+        document.querySelector('#channel').onkeyup = () => {
+          if (document.querySelector('#channel').value.length > 0)
+            document.querySelector('#submit').disabled = false
+          else document.querySelector('#submit').disabled = true
+        }
+      })
+    </script>
+  </head>
+  <body>
+    <nav class="nav nav-pills nav-justified">
+      <a class="nav-item nav-link" href="/">Home</a>
+      <a class="nav-item nav-link" href="/channels">Channels</a>
+      <a class="nav-item nav-link active" id="newChannel" href="/create">Create New Channel</a>
+      <a class="nav-item nav-link" id="logOut" href="/logout">Logout</a>
+    </nav>
+
+    <h2 class="h2 mb-3 font-weight-normal" style="text-align: center">
+      Create a new channel or join an existent one!
+    </h2>
+    <p align="center">
+      I would love to chat and give insight on young people getting started in business,
+      entrepreneurship, finding your niche, women in business and investing in real estate. It may
+      also be interesting to discuss moving away from ecommerce business whilst most people are
+      doing the opposite.
+    </p>
+    {% if message %}
+    <div class="alert alert-danger" role="alert">{{message}}</div>
+    {% endif %}
+
+    <h4 class="h2 mb-3 font-weight-normal">The currents channels are:</h4>
+    {% if channels %}
+    <div class="list-group">
+      {% for channel in channels %}
+      <a
+        href="{{ url_for('enter_channel', channel=channel) }}"
+        class="list-group-item list-group-item-action"
+        >{{channel}}</a
+      >
+      {% endfor %}
+    </div>
+    {% endif %}
+    <br />
+    <br />
+    <br />
+
+    <section class="section">
+      <form action="/create" id="createNewChannel" method="post">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="channel"
+            id="channel"
+            placeholder="Channel Name"
+            autofocus
+          />
+        </div>
+        <button id="submit" class="btn btn-primary" type="submit">Create</button>
+      </form>
+    </section>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <section class="section">
+      <img src="..\static\Shh Emoji.png" alt="" width="200" height="200" />
+      <form action="/create" id="createNewPChannel" method="post">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            name="secretChannel"
+            id="secretChannel"
+            placeholder="Insert the secret"
+            autofocus
+          />
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Password"
+            autofocus
+          />
+        </div>
+        <button id="submit" class="btn btn-primary" type="submit">Create! shhhh</button>
+      </form>
+    </section>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

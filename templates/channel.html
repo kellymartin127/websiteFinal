@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="..\static\channel.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>{{channel}}</title>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+                    currentChannel = '{{channel}}'
+                    localStorage.setItem("lastChannel", currentChannel) 
+
+                    socket.on('connect', () => {
+                        
+                        socket.emit("connected");
+
+                        document.querySelector('#logOut').addEventListener('click', () => {
+                            localStorage.removeItem('lastChannel');
+                        });
+
+                        document.querySelector('#submit').disabled = true;
+
+                        // Enable button only if there is text in the input field
+                        document.querySelector('#message').onkeyup = () => {
+                            if (document.querySelector('#message').value.length > 0)
+                                document.querySelector('#submit').disabled = false;
+                            else
+                                document.querySelector('#submit').disabled = true;
+                        };
+
+                        document.querySelector('#newChannel').addEventListener('click', () => {
+                            socket.emit("left")
+                            localStorage.removeItem('lastChannel');
+                        })
+
+                        document.querySelector('#listOfChannels').addEventListener('click', () => {
+                            socket.emit("left")
+                            localStorage.removeItem('lastChannel');
+                        });
+
+                        document.querySelector('#message').addEventListener("keydown", event => {
+                            if (event.key == "Enter") {
+                                document.getElementById("submit").click();
+                            }
+                        });
+
+                        document.querySelector('#submit').addEventListener("click", () => {
+                            let timestamp = new Date;
+                            timestamp = timestamp.toLocaleTimeString();
+                            let message = document.querySelector('#message').value;
+                            socket.emit('emit message', message, timestamp);
+                            document.querySelector('#message').value = '';
+                        });
+
+                        document.querySelector('#LeaveChannel').addEventListener('click', () => {
+                            socket.emit("left")
+                            localStorage.removeItem('lastChannel');
+                            window.location.replace('/channels');
+                        })
+                    });
+
+
+                    socket.on('state', data => {
+                        // Broadcast message of joined user.
+                        let row = `${data.message}`
+                        document.querySelector('#Messages').value += row + '\n';
+                    })
+
+                    socket.on('announce message', data => {
+                        // Format message
+                        const text = '<' + `${data.timestamp}` + '> - ' + '[' + `${data.user}` + ']:  ' + `${data.message}`;
+                        document.querySelector('#Messages').value += text + '\n'
+                    }); 
+                
+            });
+
+        </script>
+        <style>
+            .button {
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 8px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                }
+
+                .button1 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid red;
+                width: 120px;
+                height: 60px;
+                border-radius: 4px;
+                }
+
+                .button1:hover {
+                background-color: red;
+                color: white;
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+                }
+
+                .button2 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #008CBA;
+                border-radius: 4px;
+                width: 80px;
+                height: 45px;
+                }
+
+                .button2:hover {
+                background-color: #008CBA;
+                color: white;
+                box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+                width: 70px;
+                }
+        </style>
+    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.slim.js"></script>
+    <body>
+        <nav class="nav nav-pills nav-justified">
+			<a class="nav-item nav-link active" href="/">Home</a>
+			<a class="nav-item nav-link" id="listOfChannels" href="/channels">Channels</a>
+            <a class="nav-item nav-link" id="newChannel" href="/create">Create New Channel</a>
+            <a class="nav-item nav-link" id="logOut" href="/logout">Logout</a>
+          </nav>
+          
+        <h3 id="channelName">{{channel}}</h3>
+            <p>Logged in as: {{user}}</p>
+            <div class="container-channel custom-window">
+            <div id="chat-box" class="list-group">
+                <textarea class="form-control" id="Messages" rows="16" readonly>
+                    {%- if messages -%} 
+                        {%- for message in messages -%}
+                            {{ message }} {{'\n'}}
+                        {%- endfor -%}
+                        {{ '----- These are old messages -----' }}{{- '\n' -}}
+                    {%- endif -%}
+                </textarea>
+            </div>
+            <div class="form-group">
+
+            </div>
+            
+            <div class="input_group">
+                <button class="button button1" id="LeaveChannel"> <strong> Leave channel </strong> </button>
+                <input type="text" id="message" placeholder="Type a message here" maxlength="70%" size="40%">
+                <button class="button button2" id="submit" name="submit" type="submit"> <strong> Send! </strong> </button>
+            </div>
+        </center>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</body>
+</html>

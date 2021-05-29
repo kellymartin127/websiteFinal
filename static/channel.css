@@ -1,0 +1,8 @@
+.input_group {
+  text-align: center;
+}
+
+#LeaveChannel {
+  position: absolute;
+  left: 20px !important;
+}

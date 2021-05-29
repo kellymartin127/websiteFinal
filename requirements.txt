@@ -1,0 +1,9 @@
+Os
+Requests
+
+Flask:
+Flask, render_template, session, request, redirect, url_for
+
+Flask_socketio: SocketIO, send, emit, join_room, leave_room
+Pickle
+Collections: deque
